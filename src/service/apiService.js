@@ -73,6 +73,60 @@ export default {
 
   // USER APIS CALLING END
 
+  // TEAM APIS CALLING
+
+  // get All Team
+  searchTeam: (data, callback) => axios
+      .get(`${adminUrl}Team/`, { params: data })
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // update Team
+  updateTeam: (id, data, callback) => axios
+      .put(`${adminUrl}Team/updateTeam/${id}`, data)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // save Team
+  saveTeam: (data, callback) => axios
+      .post(`${adminUrl}Team/saveTeam`, data)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // delete Team
+  deleteTeam: (id, callback) => axios
+      .delete(`${adminUrl}Team/deleteTeam/${id}`)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // get one Team
+  getOneTeam: (id, callback) => axios
+      .get(`${adminUrl}Team/getOne/${id}`)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // TEAM APIS CALLING END
+
   // export to excel
   generateExcel: (reportData, filename, callback) => axios({
       url: `${adminUrl}UserService/generateExcel`,
