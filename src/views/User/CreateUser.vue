@@ -22,56 +22,37 @@
                 <b-form @reset="onReset" v-if="show">
                   <b-form-group
                     id="exampleInputGroup1"
-                    :class="{ hasError: $v.form.userName.$error }"
+                    :class="{ hasError: $v.form.username.$error }"
                   >
-                    <label for="exampleInput1">
-                      userName:
+                    <label for="username">
+                      Username:
                       <span class="text-danger">*</span>
                     </label>
                     <b-form-input
                       class="rounded-0"
-                      id="exampleInput1"
+                      id="username"
                       type="text"
-                      v-model="form.userName"
+                      v-model="form.username"
                       required
-                      placeholder="Enter userName"
+                      placeholder="Enter Username"
                     />
                     <div
                       class="text-danger small error-txt"
-                      v-if="$v.form.userName.$error"
+                      v-if="$v.form.username.$error"
                     >userName required</div>
-                  </b-form-group>
-
-                  <b-form-group id="exampleInputGroup1" :class="{ hasError: $v.form.email.$error }">
-                    <label for="exampleInput1">
-                      Email:
-                      <span class="text-danger">*</span>
-                    </label>
-                    <b-form-input
-                      class="rounded-0"
-                      id="exampleInput1"
-                      type="text"
-                      v-model="form.email"
-                      required
-                      placeholder="Enter email"
-                    />
-                    <div
-                      class="text-danger small error-txt"
-                      v-if="$v.form.email.$error"
-                    >Email required</div>
                   </b-form-group>
 
                   <b-form-group
                     id="exampleInputGroup1"
                     :class="{ hasError: $v.form.password.$error }"
                   >
-                    <label for="exampleInput1">
+                    <label for="password">
                       Password:
                       <span class="text-danger">*</span>
                     </label>
                     <b-form-input
                       class="rounded-0"
-                      id="exampleInput1"
+                      id="password"
                       type="text"
                       v-model="form.password"
                       required
@@ -83,6 +64,28 @@
                     >password required</div>
                   </b-form-group>
 
+                  <b-form-group id="exampleInputGroup1">
+                    <label for="exampleInput1">Email:</label>
+                    <b-form-input
+                      class="rounded-0"
+                      id="exampleInput1"
+                      type="text"
+                      v-model="form.email"
+                      placeholder="Enter Email"
+                    />
+                  </b-form-group>
+
+                  <b-form-group id="exampleInputGroup1">
+                    <label for="mobile">Contact No:</label>
+                    <b-form-input
+                      class="rounded-0"
+                      id="mobile"
+                      type="number"
+                      v-model="form.mobile"
+                      placeholder="Enter Contact No."
+                    />
+                  </b-form-group>
+
                   <!--End -->
 
                   <b-form-group class="text-center">
@@ -91,7 +94,8 @@
                       variant="primary"
                       class="mr-2 px-3 rounded-0"
                     >Submit</b-button>
-                    <b-button class="rounded-0 px-3" type="reset" variant="danger">Reset</b-button>
+                    <b-button class="rounded-0 mr-2 px-3" type="reset" variant="danger">Reset</b-button>
+                    <b-button class="rounded-0 px-3" @click="goToPage()" variant="warning">Cancel</b-button>
                   </b-form-group>
                 </b-form>
               </div>
@@ -128,7 +132,7 @@ export default {
         }
       ],
       form: {
-        UserName: "",
+        username: "",
         email: "",
         password: ""
       },
@@ -138,26 +142,21 @@ export default {
   },
   validations: {
     form: {
-      userName: {
+      username: {
         required
-      },
-      email: {
-        required,
-        email
       },
       password: {
         required
       }
     }
   },
-  created() {},
   methods: {
     onSubmit(form) {
       this.$v.form.$touch();
       if (this.$v.form.$error) {
         return;
       } else {
-        service.saveData("User/createUser", form, data => {
+        service.saveUser(form, data => {
           if (data.data) {
             this.$router.push("/view-user");
           }
@@ -167,12 +166,18 @@ export default {
     onReset(evt) {
       evt.preventDefault();
       /* Reset our form values */
-      this.form.UserName = "";
+      this.form.username = "";
+      this.form.email = "";
+      this.form.password = "";
+      delete this.form.mobile;
       /* Trick to reset/clear native browser form validation state */
       this.show = false;
       this.$nextTick(() => {
         this.show = true;
       });
+    },
+    goToPage() {
+      this.$router.push("/view-user");
     }
   }
 };

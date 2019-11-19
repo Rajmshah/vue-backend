@@ -1,22 +1,14 @@
 <template>
-  <div id="app"  class="OpenSansRegular main-id"
-    v-bind:class="{ 'close-menu': closed }">
-    <div id="nav">
-      <!-- <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> -->
-    </div>
-      <button
-      class="btn menu-icon"
-      v-on:click="toggleMenu()"
-      v-bind:class="{ closer: closed }"
-    >
+  <div id="app" class="OpenSansRegular main-id" v-bind:class="{ 'close-menu': closed }">
+    <div id="nav"></div>
+    <button class="btn menu-icon" v-on:click="toggleMenu()" v-bind:class="{ closer: closed }">
       <!-- <font-awesome-icon icon="align-right"/> -->
       <span class="bar bar1 text-white"></span>
       <span class="bar bar2 text-white"></span>
       <span class="bar bar3 text-white"></span>
     </button>
-    <router-view/>
-     <notifications group="foo" />
+    <router-view />
+    <notifications group="foo" />
   </div>
 </template>
 
@@ -24,14 +16,14 @@
 export default {
   data() {
     return {
-      closed: false,
+      closed: false
     };
   },
   methods: {
     toggleMenu() {
       this.closed = !this.closed;
-    },
-  },
+    }
+  }
 };
 </script>
 

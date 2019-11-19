@@ -28,10 +28,10 @@
                       />
                     </div>
                     <div class="ml-5">
-                      <button
+                      <router-link
                         class="ml-auto text-dark font-weight-bold btn btn-warning"
-                        onclick="window.location.href='/create-user'"
-                      >Create User</button>
+                        to="/create-user"
+                      >Create User</router-link>
                     </div>
                   </div>
                 </div>
@@ -65,7 +65,9 @@
                     :class="User.bodyColor"
                   >
                     <td>{{index + 1 + (currentPage - 1) * 10}}</td>
-                    <td>{{ User.email }}</td>
+                    <td>{{ User.username || '-'}}</td>
+                    <td>{{ User.password || '-'}}</td>
+                    <td>{{ User.email || '-'}}</td>
                     <td class="pl-4">
                       <router-link
                         class="text-warning btn px-1 py-0"
@@ -90,9 +92,7 @@
                   </tr>
                   <Delete
                     class="text-center"
-                    v-bind:data="{
-                          id:id
-                        }"
+                    v-bind:data="{id:id}"
                     v-on:event_child="deleteAndRefresh"
                   ></Delete>
                 </tbody>
@@ -153,7 +153,15 @@ export default {
           key: "key1"
         },
         {
-          tableHeaderName: "UserName",
+          tableHeaderName: "username",
+          key: "key1"
+        },
+        {
+          tableHeaderName: "password",
+          key: "key1"
+        },
+        {
+          tableHeaderName: "email",
           key: "key1"
         },
         {
@@ -172,16 +180,17 @@ export default {
 
   methods: {
     deleteAndRefresh(obj) {
-      service.deleteAll("User/delete", obj, data => {
+      service.deleteUser(obj._id, data => {
         this.viewUser(this.currentPage);
       });
     },
     viewUser(page) {
+      console.log(this.searchText);
       this.currentPage = page;
       const formData = {};
       formData.page = page;
       formData.name = this.searchText;
-      service.getAllUser(formData, data => {
+      service.searchUser(formData, data => {
         if (data.status === 200) {
           this.allUser = data.data.result;
           this.totalCount = data.data.count;

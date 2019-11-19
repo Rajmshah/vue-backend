@@ -20,29 +20,36 @@
                 <!-- create button -->
                 <!-- <a
                   class="btn btn-primary rounded-0 float-right mt-minus7 ml-3"
-                  href="/create-howitwork"
+                  href="/create-userservice"
                 >Create User</a>-->
                 <!-- search  -->
-                <div class="search search-width float-right mt-minus7">
+
+                <div class="search float-right mt-minus7">
                   <div class="row no-gutters align-items-center">
-                    <div class="col">
+                    <div class="ml-5">
                       <input
                         class="form-control border-0 rounded-0 text-blue"
                         type="text"
                         v-model="searchText"
-                        @input="viewhowitwork(1)"
+                        @input="viewuserservice(1)"
                         placeholder="Search"
                       />
                     </div>
                     <div class="ml-5">
                       <button
-                        class="ml-auto text-dark font-weight-bold btn btn-warning"
-                        onclick="window.location.href='/create-how-it-works'"
-                      >Create HowItWorks</button>
+                        class="ml-auto text-dark btn btn-warning font-weight-bold"
+                        v-on:click="generateExcel()"
+                      >Excel</button>
                     </div>
+                    <!-- <div class="ml-5">
+                      <button
+                        class="ml-auto text-dark btn btn-warning font-weight-bold"
+                        onclick="window.location.href='/create-user-service'"
+                      >Create User Service</button>
+                    </div>-->
                   </div>
                 </div>
-                <h5 class="card-title m-0">How it Works</h5>
+                <h5 class="card-title m-0">User Service</h5>
               </div>
               <table class="mb-0 table table-hover table-striped">
                 <thead>
@@ -56,7 +63,7 @@
                 </thead>
                 <tbody class="p-0">
                   <!-- <div class="text-center font-size-lg" v-if="!allUser.length">No data found.</div> -->
-                  <tr class="table-body-contents" v-if="!allhowitwork.length">
+                  <tr class="table-body-contents" v-if="!alluserservice.length">
                     <td class="text-center font-size-md font-weight-bold text-muted" colspan="7">
                       <b-spinner class="justify-content-md-center text-blue" v-if="!dataFound"></b-spinner>
                       <div
@@ -68,12 +75,17 @@
 
                   <tr
                     class="table-body-contents"
-                    v-for="(howitwork, index) in allhowitwork"
-                    v-bind:key="howitwork.key"
-                    :class="howitwork.bodyColor"
+                    v-for="(userservice, index) in alluserservice"
+                    v-bind:key="userservice.key"
+                    :class="userservice.bodyColor"
                   >
                     <td>{{index + 1 + (currentPage - 1) * 10}}</td>
-                    <td>{{ howitwork.name }}</td>
+                    <td>{{ userservice.date | moment}}</td>
+                    <td>{{ userservice.name }}</td>
+                    <td>{{ userservice.mobile }}</td>
+                    <td>{{userservice.description}}</td>
+                    <td>{{userservice.status}}</td>
+
                     <td class="pl-4">
                       <!-- <span	9999999999 class="text-info btn px-1">
                                         <font-awesome-icon :icon="['fas', 'edit']"/>
@@ -83,7 +95,7 @@
                         class="text-warning btn px-1 py-0"
                         v-b-tooltip.hover
                         title="Edit"
-                        :to="{ name: 'Edit HowItWorks', params: { _id: howitwork._id } }"
+                        :to="{ name: 'Edit UserService', params: { id: userservice._id } }"
                         append
                       >
                         <font-awesome-icon :icon="['fas', 'edit']" />
@@ -91,7 +103,7 @@
                       <button
                         class="text-danger btn px-1 py-0"
                         v-b-modal.modal-1
-                        @click="deleteData(howitwork._id)"
+                        @click="deleteData(userservice._id)"
                       >
                         <font-awesome-icon :icon="['far', 'trash-alt']" />
                       </button>
@@ -127,6 +139,9 @@
 </template>
 
 <script>
+import { constants } from "crypto";
+import { Datetime } from "vue-datetime";
+import moment from "moment/moment";
 import HeaderSection from "@/components/header-section.vue";
 import Sidemenu from "@/components/sidemenu-section.vue";
 import service from "@/service/apiService";
@@ -142,28 +157,44 @@ export default {
   data() {
     return {
       dataFound: "",
+      type: "userservice",
       id: "",
-      type: "howitwork",
       page: "",
       searchText: "",
       currentPage: 1,
       totalCount: 0,
       perPage: 0,
-      allhowitwork: [],
+      alluserservice: [],
       deleteId: {},
-      howitworkArray: [],
+      userserviceArray: [],
       breadCrum: [
         {
-          text: "howitwork"
+          text: "userservice"
         }
       ],
       tableHeaders: [
         {
-          tableHeaderName: "Sr-no",
+          tableHeaderName: "sr-no",
+          key: "key1"
+        },
+        {
+          tableHeaderName: "Date",
           key: "key1"
         },
         {
           tableHeaderName: "Name",
+          key: "key1"
+        },
+        {
+          tableHeaderName: "Mobile-No",
+          key: "key1"
+        },
+        {
+          tableHeaderName: "Description",
+          key: "key1"
+        },
+        {
+          tableHeaderName: "Status",
           key: "key1"
         },
         {
@@ -177,23 +208,29 @@ export default {
     };
   },
   created() {
-    this.viewhowitwork(this.currentPage);
+    this.viewuserservice(this.currentPage);
   },
-
+  filters: {
+    moment(date) {
+      return moment(date).format("Do MMM YYYY");
+    }
+  },
   methods: {
     deleteAndRefresh(obj) {
-      service.deleteAll("HowItWork/deleteHowItWork", obj, data => {
-        this.viewhowitwork(this.currentPage);
+      console.log(obj);
+      service.deleteAll("UserService/deleteUserService", obj, data => {
+        this.viewuserservice(this.currentPage);
       });
     },
-    viewhowitwork(page) {
+
+    viewuserservice(page) {
       this.currentPage = page;
       const formData = {};
       formData.page = page;
       formData.name = this.searchText;
-      service.getAllHowItWork(formData, data => {
-        if (data.data.result) {
-          this.allhowitwork = data.data.result;
+      service.getAllUserService(formData, data => {
+        if (data.status === 200) {
+          this.alluserservice = data.data.result;
           this.totalCount = data.data.count;
           this.perPage = 10;
         } else if (page > 1) {
@@ -208,14 +245,20 @@ export default {
         }
       });
     },
+    generateExcel() {
+      console.log("in function");
+      service.generateExcel({}, "Service", (err, result) => {
+        console.log("result---*******", err, result);
+      });
+    },
     deleteData(id) {
       this.id = id;
     },
     goToPage(page) {
       this.$router.push({
-        name: "View HowItWorks"
+        name: "View Team"
       });
-      this.viewhowitwork(page);
+      this.viewuserservice(page);
     }
   }
 };

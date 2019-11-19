@@ -23,56 +23,37 @@
                 <b-form @submit="onSubmit" v-if="show">
                   <b-form-group
                     id="exampleInputGroup1"
-                    :class="{ hasError: $v.form.userName.$error }"
+                    :class="{ hasError: $v.form.username.$error }"
                   >
-                    <label for="exampleInput1">
-                      userName:
+                    <label for="username">
+                      Username:
                       <span class="text-danger">*</span>
                     </label>
                     <b-form-input
                       class="rounded-0"
-                      id="exampleInput1"
+                      id="username"
                       type="text"
-                      v-model="form.userName"
+                      v-model="form.username"
                       required
-                      placeholder="Enter userName"
+                      placeholder="Enter Username"
                     />
                     <div
                       class="text-danger small error-txt"
-                      v-if="$v.form.userName.$error"
-                    >userName required</div>
-                  </b-form-group>
-
-                  <b-form-group id="exampleInputGroup1" :class="{ hasError: $v.form.email.$error}">
-                    <label for="exampleInput1">
-                      Email:
-                      <span class="text-danger">*</span>
-                    </label>
-                    <b-form-input
-                      class="rounded-0"
-                      id="exampleInput1"
-                      type="text"
-                      v-model="form.email"
-                      required
-                      placeholder="Enter email"
-                    />
-                    <div
-                      class="text-danger small error-txt"
-                      v-if="$v.form.email.$error"
-                    >Email required</div>
+                      v-if="$v.form.username.$error"
+                    >username required</div>
                   </b-form-group>
 
                   <b-form-group
                     id="exampleInputGroup1"
                     :class="{ hasError: $v.form.password.$error }"
                   >
-                    <label for="exampleInput1">
+                    <label for="password">
                       Password:
                       <span class="text-danger">*</span>
                     </label>
                     <b-form-input
                       class="rounded-0"
-                      id="exampleInput1"
+                      id="password"
                       type="text"
                       v-model="form.password"
                       required
@@ -82,6 +63,28 @@
                       class="text-danger small error-txt"
                       v-if="$v.form.password.$error"
                     >password required</div>
+                  </b-form-group>
+
+                  <b-form-group id="exampleInputGroup1">
+                    <label for="email">Email:</label>
+                    <b-form-input
+                      class="rounded-0"
+                      id="email"
+                      type="text"
+                      v-model="form.email"
+                      placeholder="Enter Email"
+                    />
+                  </b-form-group>
+
+                  <b-form-group id="exampleInputGroup1">
+                    <label for="mobile">Mobile:</label>
+                    <b-form-input
+                      class="rounded-0"
+                      id="mobile"
+                      type="number"
+                      v-model="form.mobile"
+                      placeholder="Enter Mobile"
+                    />
                   </b-form-group>
                   <!--End -->
 
@@ -134,9 +137,9 @@ export default {
         }
       ],
       form: {
-        userName: "",
+        username: "",
         password: "",
-        email
+        email: ""
       },
       options: [],
       show: true
@@ -144,11 +147,10 @@ export default {
   },
   validations: {
     form: {
-      userName: {
+      username: {
         required
       },
-      password: { required },
-      email: { required, email }
+      password: { required }
     }
   },
   created() {
@@ -158,12 +160,9 @@ export default {
     getOne() {
       if (this.$route.params.id) {
         console.log("this.$route.params._id", this.$route.params.id);
-        service.getOneData(
-          `User/getOne/${this.$route.params.id}`,
-          data => {
-            this.form = data.data;
-          }
-        );
+        service.getOneUser(this.$route.params.id, data => {
+          this.form = data.data;
+        });
       }
     },
     onSubmit(form) {
@@ -171,7 +170,7 @@ export default {
       if (this.$v.form.$error) {
         return;
       } else {
-        service.updateUser(form, data => {
+        service.updateUser(this.$route.params.id, form, data => {
           if (data.data) {
             this.$router.push("/view-user");
           }

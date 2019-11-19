@@ -1,6 +1,6 @@
 {
   "script": "serve",
-  "name": "Motofyx Backend UI",
+  "name": "MTC Backend UI",
   "env": {
     "PM2_SERVE_PATH": "dist",
     "PM2_SERVE_PORT": 8080,

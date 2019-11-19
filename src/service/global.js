@@ -1,14 +1,14 @@
 export default {
-  uploadUrl: 'https://motofyx-file-upload.wohlig.in/api/upload',
-  readFileUrl: 'https://motofyx-file-upload.wohlig.in/api/upload/readFile?file=',
+  uploadUrl: "http://localhost:1330/api/upload",
+  readFileUrl: "http://localhost:1330/api/upload/readFile?file=",
 
   setUser(data) {
-    localStorage.setItem('user', JSON.stringify(data));
+    localStorage.setItem("user", JSON.stringify(data));
   },
   removeUser() {
-    localStorage.removeItem('user');
+    localStorage.removeItem("user");
   },
   getUser() {
     return JSON.parse(localStorage.getItem("user"));
-  },
+  }
 };
