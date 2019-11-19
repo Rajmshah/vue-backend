@@ -7,17 +7,17 @@
         <!-- <b-img v-bind:src="Logo" fluid /> -->
         <span class="text-white">MTC MARUDHAR CUP</span>
       </b-navbar-brand>
-      <b-collapse is-nav id="nav_collapse">
-        <!-- Right aligned nav items -->
+      <!-- <b-collapse is-nav id="nav_collapse">
+        Right aligned nav items
         <b-navbar-nav class="ml-auto">
           <b-navbar-nav right>
-            <!-- <div class="text-primary text-uppercase mr-3">{{getOneUser.name}}</div> -->
+            <div class="text-primary text-uppercase mr-3">{{getOneUser.name}}</div>
             <button class="text-white text-uppercase btn p-0" v-on:click="logout()">
               <font-awesome-icon :icon="['fa', 'sign-out-alt']" class="fa-2x" />
             </button>
           </b-navbar-nav>
         </b-navbar-nav>
-      </b-collapse>
+      </b-collapse>-->
     </b-navbar>
   </header>
 </template>

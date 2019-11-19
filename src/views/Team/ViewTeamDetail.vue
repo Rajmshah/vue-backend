@@ -11,6 +11,53 @@
       <!-- sidemenu end-->
       <div class="main-content bg-light">
         <div class="container-fluid basic-table my-3">
+          <div class="card rounded-0 mb-5">
+            <div class="p-0 rounded-0">
+              <table class="mb-0 table table-hover table-striped">
+                <thead>
+                  <tr class="table-body-header rounded-0">
+                    <th
+                      class="text-uppercase text-blue"
+                      v-for="tableHeader in teamTableHeaders"
+                      v-bind:key="tableHeader.tableHeaderName"
+                    >{{ tableHeader.tableHeaderName }}</th>
+                  </tr>
+                </thead>
+                <tbody class="p-0">
+                  <!-- <div class="text-center font-size-lg" v-if="!allUser.length">No data found.</div> -->
+                  <tr class="table-body-contents" v-if="!teamDetail">
+                    <td class="text-center font-size-md font-weight-bold text-muted" colspan="3">
+                      <b-spinner class="justify-content-md-center text-blue" v-if="!dataFound"></b-spinner>
+                      <div
+                        class="justify-content-md-center text-blue"
+                        v-else-if="dataFound"
+                      >No data found</div>
+                    </td>
+                  </tr>
+
+                  <tr class="table-body-contents">
+                    <td>{{ teamDetail.name || '-'}}</td>
+                    <td>{{ teamDetail.village || '-'}}</td>
+                    <td v-if="teamDetail.logo">
+                      <img
+                        :src="teamDetail.logo|serverimage"
+                        width="150"
+                        height="auto"
+                        :alt="teamDetail.name"
+                      />
+                    </td>
+                    <td v-if="!teamDetail.logo">-</td>
+                  </tr>
+                  <viewImage
+                    class="text-center"
+                    v-bind:data="{
+                          id:id
+                        }"
+                  ></viewImage>
+                </tbody>
+              </table>
+            </div>
+          </div>
           <div class="card rounded-0">
             <div class="p-0 rounded-0">
               <div class="card-header">
@@ -18,22 +65,22 @@
 
                 <div class="search float-right mt-minus7">
                   <div class="row no-gutters align-items-center">
-                    <div class="ml-5">
+                    <!-- <div class="ml-5 hide">
                       <input
                         class="form-control border-0 rounded-0 text-blue"
                         type="text"
                         v-model="searchText"
-                        @input="viewteam(1)"
+                        @input="viewPlayer(1)"
                         placeholder="Search"
                       />
-                    </div>
+                    </div>-->
                     <div class="ml-5">
                       <button class="ml-auto text-dark btn btn-warning font-weight-bold">Excel</button>
                       <!-- v-on:click="generateExcel()" -->
                     </div>
                   </div>
                 </div>
-                <h5 class="card-title m-0">Teams</h5>
+                <h5 class="card-title m-0">Players</h5>
               </div>
               <table class="mb-0 table table-hover table-striped">
                 <thead>
@@ -47,8 +94,8 @@
                 </thead>
                 <tbody class="p-0">
                   <!-- <div class="text-center font-size-lg" v-if="!allUser.length">No data found.</div> -->
-                  <tr class="table-body-contents" v-if="!allteam.length">
-                    <td class="text-center font-size-md font-weight-bold text-muted" colspan="7">
+                  <tr class="table-body-contents" v-if="!allPlayer.length">
+                    <td class="text-center font-size-md font-weight-bold text-muted" colspan="10">
                       <b-spinner class="justify-content-md-center text-blue" v-if="!dataFound"></b-spinner>
                       <div
                         class="justify-content-md-center text-blue"
@@ -59,54 +106,36 @@
 
                   <tr
                     class="table-body-contents"
-                    v-for="(team, index) in allteam"
-                    v-bind:key="team.key"
-                    :class="team.bodyColor"
+                    v-for="(player, index) in allPlayer"
+                    v-bind:key="player.key"
+                    :class="player.bodyColor"
                   >
-                    <td>{{index + 1 + (currentPage - 1) * 10}}</td>
-                    <td>{{ team.name }}</td>
-                    <td>{{ team.village }}</td>
-
-                    <td class="pl-4">
-                      <router-link
-                        class="text-warning btn px-1 py-0"
-                        v-b-tooltip.hover
-                        title="View"
-                        :to="{ name: 'View TeamDetail', params: { id: team._id } }"
-                        append
-                      >
-                        <font-awesome-icon :icon="['far', 'eye']" />
-                      </router-link>
+                    <td>{{index + 1 + (currentPage - 1) * allPlayer.length}}</td>
+                    <td>{{ player.fullName || '-'}}</td>
+                    <td>{{ player.mobile || '-'}}</td>
+                    <td>{{ player.email || '-'}}</td>
+                    <td>{{ player.age || '-'}}</td>
+                    <td>{{ player.keyRole || '-'}}</td>
+                    <td>{{ player.battingType || '-'}}</td>
+                    <td>{{ player.bowlingType || '-'}}</td>
+                    <td>{{ player.isWicketKeeper || '-'}}</td>
+                    <td v-if="player.photograph">
                       <button
-                        class="text-danger btn px-1 py-0"
+                        class="text-primary btn px-1 py-0"
                         v-b-modal.modal-1
-                        @click="deleteData(team._id)"
-                      >
-                        <font-awesome-icon :icon="['far', 'trash-alt']" />
-                      </button>
+                        @click="passData(player.photograph)"
+                      >View</button>
                     </td>
+                    <td v-if="!player.photograph">-</td>
                   </tr>
-
-                  <Delete
+                  <viewImage
                     class="text-center"
                     v-bind:data="{
                           id:id
                         }"
-                    v-on:event_child="deleteAndRefresh"
-                  ></Delete>
+                  ></viewImage>
                 </tbody>
               </table>
-            </div>
-            <div class="my-2 py-1">
-              <b-pagination
-                class="mb-0"
-                align="center"
-                v-if="totalCount"
-                :total-rows="totalCount"
-                v-model="currentPage"
-                :per-page="perPage"
-                v-on:input="goToPage(currentPage)"
-              />
             </div>
           </div>
         </div>
@@ -120,29 +149,40 @@ import moment from "moment/moment";
 import HeaderSection from "@/components/header-section.vue";
 import Sidemenu from "@/components/sidemenu-section.vue";
 import service from "@/service/apiService";
-import Delete from "@/components/modal/delete.vue";
+import viewImage from "@/components/modal/viewImage.vue";
 
 export default {
   name: "Table",
   components: {
     HeaderSection,
     Sidemenu,
-    Delete
+    viewImage
   },
   data() {
     return {
       id: "",
       page: "",
-      searchText: "",
       currentPage: 1,
-      totalCount: 0,
-      perPage: 0,
-      allteam: [],
-      deleteId: {},
-      teamArray: [],
+      allPlayer: [],
+      PlayerArray: [],
+      teamDetail: {},
       breadCrum: [
         {
-          text: "team"
+          text: "Player"
+        }
+      ],
+      teamTableHeaders: [
+        {
+          tableHeaderName: "Team Name",
+          key: "key1"
+        },
+        {
+          tableHeaderName: "Village",
+          key: "key1"
+        },
+        {
+          tableHeaderName: "Logo",
+          key: "key1"
         }
       ],
       tableHeaders: [
@@ -155,11 +195,35 @@ export default {
           key: "key1"
         },
         {
-          tableHeaderName: "Village",
+          tableHeaderName: "Email",
           key: "key1"
         },
         {
-          tableHeaderName: "Action",
+          tableHeaderName: "Contact No",
+          key: "key1"
+        },
+        {
+          tableHeaderName: "Age",
+          key: "key1"
+        },
+        {
+          tableHeaderName: "Role",
+          key: "key1"
+        },
+        {
+          tableHeaderName: "Batting Type",
+          key: "key1"
+        },
+        {
+          tableHeaderName: "Bowling Type",
+          key: "key1"
+        },
+        {
+          tableHeaderName: "Wicket Keeper",
+          key: "key1"
+        },
+        {
+          tableHeaderName: "Photo",
           key: "key1"
         }
       ],
@@ -169,7 +233,8 @@ export default {
     };
   },
   created() {
-    this.viewteam(this.currentPage);
+    this.getOne();
+    this.viewPlayer(this.currentPage);
   },
   filters: {
     moment(date) {
@@ -177,25 +242,25 @@ export default {
     }
   },
   methods: {
-    deleteAndRefresh(obj) {
-      console.log(obj);
-      service.deleteTeam("Team/deleteTeam", obj, data => {
-        this.viewteam(this.currentPage);
-      });
+    getOne() {
+      if (this.$route.params.id) {
+        console.log("this.$route.params._id", this.$route.params.id);
+        service.getOneTeam(this.$route.params.id, data => {
+          this.teamDetail = data.data;
+        });
+      }
     },
-
-    viewteam(page) {
+    passData(id) {
+      this.id = id;
+    },
+    viewPlayer(page) {
       this.currentPage = page;
       const formData = {};
       formData.page = page;
-      formData.name = this.searchText;
-      service.searchTeam(formData, data => {
+      formData.team = this.$route.params.id;
+      service.searchPlayer(formData, data => {
         if (data.status === 200) {
-          this.allteam = data.data.result;
-          this.totalCount = data.data.count;
-          this.perPage = 10;
-        } else if (page > 1) {
-          this.goToPage(page - 1);
+          this.allPlayer = data.data;
         }
         if (formData === "noDataFound") {
           this.dataFound = false;
@@ -208,18 +273,9 @@ export default {
     },
     generateExcel() {
       console.log("in function");
-      service.generateExcel({}, "Team", (err, result) => {
+      service.generateExcel({}, "Player", (err, result) => {
         console.log("result---*******", err, result);
       });
-    },
-    deleteData(id) {
-      this.id = id;
-    },
-    goToPage(page) {
-      this.$router.push({
-        name: "View Team"
-      });
-      this.viewteam(page);
     }
   }
 };

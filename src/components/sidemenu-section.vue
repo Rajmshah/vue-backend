@@ -29,6 +29,10 @@ export default {
         {
           name: "Team",
           link: "/view-team"
+        },
+        {
+          name: "Setting",
+          link: "/view-setting"
         }
       ]
     };

@@ -38,7 +38,7 @@ export default {
       this.modal = this.id;
       const obj = {};
       obj._id = this.data.id;
-      this.$bvModal.hide('modal-1');
+      this.$bvModal.hide("modal-1");
       this.$emit("event_child", obj);
 
       // this.$notify({

@@ -127,6 +127,114 @@ export default {
 
   // TEAM APIS CALLING END
 
+  // Player APIS CALLING
+
+  // get All Player
+  searchPlayer: (data, callback) => axios
+      .get(`${adminUrl}Player/`, { params: data })
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // update Player
+  updatePlayer: (id, data, callback) => axios
+      .put(`${adminUrl}Player/updatePlayer/${id}`, data)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // save Player
+  savePlayer: (data, callback) => axios
+      .post(`${adminUrl}Player/savePlayer`, data)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // delete Player
+  deletePlayer: (id, callback) => axios
+      .delete(`${adminUrl}Player/deletePlayer/${id}`)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // get one Player
+  getOnePlayer: (id, callback) => axios
+      .get(`${adminUrl}Player/getOne/${id}`)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // Player APIS CALLING END
+
+  // Setting APIS CALLING
+
+  // get All Setting
+  searchSetting: (data, callback) => axios
+      .get(`${adminUrl}Setting/`, { params: data })
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // update Setting
+  updateSetting: (id, data, callback) => axios
+      .put(`${adminUrl}Setting/updateSetting/${id}`, data)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // save Setting
+  saveSetting: (data, callback) => axios
+      .post(`${adminUrl}Setting/saveSetting`, data)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // delete Setting
+  deleteSetting: (id, callback) => axios
+      .delete(`${adminUrl}Setting/deleteSetting/${id}`)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // get one Setting
+  getOneSetting: (id, callback) => axios
+      .get(`${adminUrl}Setting/getOne/${id}`)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // Setting APIS CALLING END
+
   // export to excel
   generateExcel: (reportData, filename, callback) => axios({
       url: `${adminUrl}UserService/generateExcel`,
