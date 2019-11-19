@@ -55,7 +55,7 @@
 
 <script>
 // @ is an alias to /src
-import headerLogo from "@/assets/logo.svg";
+import headerLogo from "@/assets/mtc-logo.png";
 // eslint-disable-next-line no-unused-vars
 import service from "@/service/apiService";
 import { required, email } from "vuelidate/lib/validators";

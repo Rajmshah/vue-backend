@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import headerLogo from "@/assets/logo.svg";
+import headerLogo from "@/assets/mtc-logo.png";
 
 export default {
   Logo: headerLogo,

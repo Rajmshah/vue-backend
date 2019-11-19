@@ -4,8 +4,8 @@
     <b-navbar toggleable="md" type="light" variant="faded" class="bg-blue border-bottom" sticky>
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
       <b-navbar-brand href="/view-brand" class="header-logo">
-        <!-- <b-img v-bind:src="Logo" fluid /> -->
-        <span class="text-white">MTC MARUDHAR CUP</span>
+        <b-img v-bind:src="Logo" fluid />
+        <span class="text-white">MARUDHAR CUP</span>
       </b-navbar-brand>
       <!-- <b-collapse is-nav id="nav_collapse">
         Right aligned nav items
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import headerLogo from "@/assets/logo.svg";
+import headerLogo from "@/assets/mtc-logo.png";
 import { globalAgent } from "http";
 
 import global from "@/service/global.js";
