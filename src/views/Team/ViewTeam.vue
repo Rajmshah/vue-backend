@@ -179,7 +179,7 @@ export default {
   methods: {
     deleteAndRefresh(obj) {
       console.log(obj);
-      service.deleteTeam(obj, data => {
+      service.deleteTeam(obj._id, data => {
         this.viewteam(this.currentPage);
       });
     },
