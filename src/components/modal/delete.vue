@@ -9,9 +9,6 @@
     >
       <b-button @click="close()" variant="outline-danger" class="mr-3">Delete</b-button>
       <b-button variant="outline-primary" @click="$bvModal.hide('modal-1')">Cancel</b-button>
-
-      <notifications group="foo" />
-      <notifications group="warning" />
     </b-modal>
   </div>
 </template>
@@ -40,42 +37,16 @@ export default {
       obj._id = this.data.id;
       this.$bvModal.hide("modal-1");
       this.$emit("event_child", obj);
-
-      // this.$notify({
-      //   group: "foo",
-      //   type: "success",
-      //   title: "Important message",
-      //   text: "Data Deleted Successfully",
-      //   duration: 1500
-      // });
     },
     deleteTostr() {
       if (this.status == 200) {
-        this.$notify({
-          group: "foo",
-          type: "success",
-          title: "Success message",
-          text: "Data Deleted Successfully"
-        });
+        this.$toaster.success("Data Deleted Successfully");
       } else {
-        this.$notify({
-          group: "foo",
-          type: "error",
-          title: "Error message",
-          text: "Data Deleted Unsuccessfully"
-        });
+        this.$toaster.success("Data Deleted Unsuccessfully");
       }
     },
     closeCancelModal() {
       this.hideDeleteModal();
-      // this.$root.$emit("bv::hide::modal", this.id.modal);
-      // this.$notify({
-      //   group: "foo",
-      //   type: "error",
-      //   title: "Important message",
-      //   text: "Data not deleted",
-      //   duration: 1500
-      // });
     }
   }
 };

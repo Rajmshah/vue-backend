@@ -8,7 +8,6 @@
       <span class="bar bar3 text-white"></span>
     </button>
     <router-view />
-    <notifications group="foo" />
   </div>
 </template>
 

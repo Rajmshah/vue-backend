@@ -37,10 +37,9 @@
                       required
                       placeholder="Enter Username"
                     />
-                    <div
-                      class="text-danger small error-txt"
-                      v-if="$v.form.username.$error"
-                    >username required</div>
+                    <div class="text-danger small error-txt" v-if="$v.form.username.$error">
+                      username required
+                    </div>
                   </b-form-group>
 
                   <b-form-group
@@ -59,10 +58,9 @@
                       required
                       placeholder="Enter Password"
                     />
-                    <div
-                      class="text-danger small error-txt"
-                      v-if="$v.form.password.$error"
-                    >password required</div>
+                    <div class="text-danger small error-txt" v-if="$v.form.password.$error">
+                      password required
+                    </div>
                   </b-form-group>
 
                   <b-form-group id="exampleInputGroup1">
@@ -93,13 +91,15 @@
                       v-on:click="onSubmit(form)"
                       variant="primary"
                       class="mr-2 px-3 rounded-0"
-                    >Submit</b-button>
+                      >Submit</b-button
+                    >
                     <b-button
                       class="rounded-0 px-3"
                       type="cancel"
                       v-on:click="onCancel()"
                       variant="danger"
-                    >Cancel</b-button>
+                      >Cancel</b-button
+                    >
                   </b-form-group>
                 </b-form>
               </div>
@@ -159,7 +159,6 @@ export default {
   methods: {
     getOne() {
       if (this.$route.params.id) {
-        console.log("this.$route.params._id", this.$route.params.id);
         service.getOneUser(this.$route.params.id, data => {
           this.form = data.data;
         });

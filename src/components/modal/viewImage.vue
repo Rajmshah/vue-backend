@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-modal id="modal-1" ref="showImage" hide-footer no-stacking>
-      <img :src="data.id | serverimage" alt="profile photograph" />
+      <img :src="data.id | serverimage" alt="profile photograph" width="300" height="auto" />
       <!-- <b-button hidden variant="outline-primary" @click="$bvModal.hide('modal-1')">Cancel</b-button> -->
     </b-modal>
   </div>

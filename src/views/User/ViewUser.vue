@@ -27,11 +27,20 @@
                         placeholder="Search"
                       />
                     </div>
-                    <div class="ml-5">
+                    <div class="ml-3">
                       <router-link
                         class="ml-auto text-dark font-weight-bold btn btn-warning"
                         to="/create-user"
-                      >Create User</router-link>
+                        >Create User</router-link
+                      >
+                    </div>
+                    <div class="ml-3">
+                      <button
+                        v-on:click="generateExcel()"
+                        class="ml-auto text-dark btn btn-warning font-weight-bold"
+                      >
+                        Excel
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -44,30 +53,34 @@
                       class="text-uppercase text-blue"
                       v-for="tableHeader in tableHeaders"
                       v-bind:key="tableHeader.tableHeaderName"
-                    >{{ tableHeader.tableHeaderName }}</th>
+                    >
+                      {{ tableHeader.tableHeaderName }}
+                    </th>
                   </tr>
                 </thead>
                 <tbody class="p-0">
                   <tr class="table-body-contents" v-if="!allUser.length">
                     <td class="text-center font-size-md font-weight-bold text-muted" colspan="7">
-                      <b-spinner class="justify-content-md-center text-blue" v-if="!dataFound"></b-spinner>
-                      <div
+                      <b-spinner
                         class="justify-content-md-center text-blue"
-                        v-else-if="dataFound"
-                      >No data found</div>
+                        v-if="!dataFound"
+                      ></b-spinner>
+                      <div class="justify-content-md-center text-blue" v-else-if="dataFound">
+                        No data found
+                      </div>
                     </td>
                   </tr>
 
                   <tr
                     class="table-body-contents"
-                    v-for="(User,index) in allUser"
+                    v-for="(User, index) in allUser"
                     v-bind:key="User.key"
                     :class="User.bodyColor"
                   >
-                    <td>{{index + 1 + (currentPage - 1) * 10}}</td>
-                    <td>{{ User.username || '-'}}</td>
-                    <td>{{ User.password || '-'}}</td>
-                    <td>{{ User.email || '-'}}</td>
+                    <td>{{ index + 1 + (currentPage - 1) * 10 }}</td>
+                    <td>{{ User.username || "-" }}</td>
+                    <td>{{ User.password || "-" }}</td>
+                    <td>{{ User.email || "-" }}</td>
                     <td class="pl-4">
                       <router-link
                         class="text-warning btn px-1 py-0"
@@ -92,7 +105,7 @@
                   </tr>
                   <Delete
                     class="text-center"
-                    v-bind:data="{id:id}"
+                    v-bind:data="{ id: id }"
                     v-on:event_child="deleteAndRefresh"
                   ></Delete>
                 </tbody>
@@ -134,12 +147,12 @@ export default {
     return {
       type: "User",
       id: "",
-      dataFound: "",
       page: "",
       searchText: "",
       currentPage: 1,
       totalCount: 0,
       perPage: 0,
+      dataFound: false,
       allUser: [],
       userArray: [],
       breadCrum: [
@@ -185,7 +198,6 @@ export default {
       });
     },
     viewUser(page) {
-      console.log(this.searchText);
       this.currentPage = page;
       const formData = {};
       formData.page = page;
@@ -216,6 +228,19 @@ export default {
         name: "View User"
       });
       this.viewUser(page);
+    },
+    generateExcel() {
+      service.generateUserExcel({}, "User", (err, result) => {
+        if (err) {
+          this.$toaster.error("Error while generating Excel.", {
+            timeout: 2000
+          });
+        } else {
+          this.$toaster.success("Excel Generated Successfully.", {
+            timeout: 2000
+          });
+        }
+      });
     }
   }
 };

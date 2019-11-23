@@ -38,10 +38,9 @@
                       required
                       placeholder="Enter Player Count"
                     />
-                    <div
-                      class="text-danger small error-txt"
-                      v-if="$v.form.playerCount.$error"
-                    >Player Count required</div>
+                    <div class="text-danger small error-txt" v-if="$v.form.playerCount.$error">
+                      Player Count required
+                    </div>
                   </b-form-group>
                   <!--End -->
 
@@ -50,13 +49,15 @@
                       v-on:click="onSubmit(form)"
                       variant="primary"
                       class="mr-2 px-3 rounded-0"
-                    >Submit</b-button>
+                      >Submit</b-button
+                    >
                     <b-button
                       class="rounded-0 px-3"
                       type="cancel"
                       v-on:click="onCancel()"
                       variant="danger"
-                    >Cancel</b-button>
+                      >Cancel</b-button
+                    >
                   </b-form-group>
                 </b-form>
               </div>
@@ -111,7 +112,6 @@ export default {
   methods: {
     getOne() {
       if (this.$route.params.id) {
-        console.log("this.$route.params._id", this.$route.params.id);
         service.getOneSetting(this.$route.params.id, data => {
           this.form = data.data;
         });

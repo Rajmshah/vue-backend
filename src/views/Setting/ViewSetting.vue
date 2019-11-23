@@ -31,7 +31,8 @@
                       <router-link
                         class="ml-auto text-dark font-weight-bold btn btn-warning"
                         to="/create-setting"
-                      >Create Setting</router-link>
+                        >Create Setting</router-link
+                      >
                     </div>
                   </div>
                 </div>
@@ -44,28 +45,32 @@
                       class="text-uppercase text-blue"
                       v-for="tableHeader in tableHeaders"
                       v-bind:key="tableHeader.tableHeaderName"
-                    >{{ tableHeader.tableHeaderName }}</th>
+                    >
+                      {{ tableHeader.tableHeaderName }}
+                    </th>
                   </tr>
                 </thead>
                 <tbody class="p-0">
                   <tr class="table-body-contents" v-if="!allSetting.length">
                     <td class="text-center font-size-md font-weight-bold text-muted" colspan="7">
-                      <b-spinner class="justify-content-md-center text-blue" v-if="!dataFound"></b-spinner>
-                      <div
+                      <b-spinner
                         class="justify-content-md-center text-blue"
-                        v-else-if="dataFound"
-                      >No data found</div>
+                        v-if="!dataFound"
+                      ></b-spinner>
+                      <div class="justify-content-md-center text-blue" v-else-if="dataFound">
+                        No data found
+                      </div>
                     </td>
                   </tr>
 
                   <tr
                     class="table-body-contents"
-                    v-for="(Setting,index) in allSetting"
+                    v-for="(Setting, index) in allSetting"
                     v-bind:key="Setting.key"
                     :class="Setting.bodyColor"
                   >
-                    <td>{{index + 1 + (currentPage - 1) * 10}}</td>
-                    <td>{{ Setting.playerCount || '-'}}</td>
+                    <td>{{ index + 1 + (currentPage - 1) * 10 }}</td>
+                    <td>{{ Setting.playerCount || "-" }}</td>
                     <td class="pl-4">
                       <router-link
                         class="text-warning btn px-1 py-0"
@@ -90,7 +95,7 @@
                   </tr>
                   <Delete
                     class="text-center"
-                    v-bind:data="{id:id}"
+                    v-bind:data="{ id: id }"
                     v-on:event_child="deleteAndRefresh"
                   ></Delete>
                 </tbody>
@@ -119,12 +124,12 @@ export default {
     return {
       type: "Setting",
       id: "",
-      dataFound: "",
       page: "",
       searchText: "",
       currentPage: 1,
       totalCount: 0,
       perPage: 0,
+      dataFound: false,
       allSetting: [],
       SettingArray: [],
       breadCrum: [

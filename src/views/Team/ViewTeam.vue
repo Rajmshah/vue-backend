@@ -28,8 +28,12 @@
                       />
                     </div>
                     <div class="ml-5">
-                      <button class="ml-auto text-dark btn btn-warning font-weight-bold">Excel</button>
-                      <!-- v-on:click="generateExcel()" -->
+                      <button
+                        class="ml-auto text-dark btn btn-warning font-weight-bold"
+                        v-on:click="generateExcel()"
+                      >
+                        Excel
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -42,18 +46,22 @@
                       class="text-uppercase text-blue"
                       v-for="tableHeader in tableHeaders"
                       v-bind:key="tableHeader.tableHeaderName"
-                    >{{ tableHeader.tableHeaderName }}</th>
+                    >
+                      {{ tableHeader.tableHeaderName }}
+                    </th>
                   </tr>
                 </thead>
                 <tbody class="p-0">
                   <!-- <div class="text-center font-size-lg" v-if="!allUser.length">No data found.</div> -->
                   <tr class="table-body-contents" v-if="!allteam.length">
                     <td class="text-center font-size-md font-weight-bold text-muted" colspan="7">
-                      <b-spinner class="justify-content-md-center text-blue" v-if="!dataFound"></b-spinner>
-                      <div
+                      <b-spinner
                         class="justify-content-md-center text-blue"
-                        v-else-if="dataFound"
-                      >No data found</div>
+                        v-if="!dataFound"
+                      ></b-spinner>
+                      <div class="justify-content-md-center text-blue" v-else-if="dataFound">
+                        No data found
+                      </div>
                     </td>
                   </tr>
 
@@ -63,7 +71,7 @@
                     v-bind:key="team.key"
                     :class="team.bodyColor"
                   >
-                    <td>{{index + 1 + (currentPage - 1) * 10}}</td>
+                    <td>{{ index + 1 + (currentPage - 1) * 10 }}</td>
                     <td>{{ team.name }}</td>
                     <td>{{ team.village }}</td>
 
@@ -90,8 +98,8 @@
                   <Delete
                     class="text-center"
                     v-bind:data="{
-                          id:id
-                        }"
+                      id: id
+                    }"
                     v-on:event_child="deleteAndRefresh"
                   ></Delete>
                 </tbody>
@@ -137,6 +145,7 @@ export default {
       currentPage: 1,
       totalCount: 0,
       perPage: 0,
+      dataFound: false,
       allteam: [],
       deleteId: {},
       teamArray: [],
@@ -178,7 +187,6 @@ export default {
   },
   methods: {
     deleteAndRefresh(obj) {
-      console.log(obj);
       service.deleteTeam(obj._id, data => {
         this.viewteam(this.currentPage);
       });
@@ -207,9 +215,16 @@ export default {
       });
     },
     generateExcel() {
-      console.log("in function");
-      service.generateExcel({}, "Team", (err, result) => {
-        console.log("result---*******", err, result);
+      service.generateTeamExcel({}, "Team", (err, result) => {
+        if (err) {
+          this.$toaster.error("Error while generating Excel.", {
+            timeout: 2000
+          });
+        } else {
+          this.$toaster.success("Excel Generated Successfully.", {
+            timeout: 2000
+          });
+        }
       });
     },
     deleteData(id) {

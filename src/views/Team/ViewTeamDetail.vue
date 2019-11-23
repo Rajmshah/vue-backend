@@ -20,28 +20,32 @@
                       class="text-uppercase text-blue"
                       v-for="tableHeader in teamTableHeaders"
                       v-bind:key="tableHeader.tableHeaderName"
-                    >{{ tableHeader.tableHeaderName }}</th>
+                    >
+                      {{ tableHeader.tableHeaderName }}
+                    </th>
                   </tr>
                 </thead>
                 <tbody class="p-0">
                   <!-- <div class="text-center font-size-lg" v-if="!allUser.length">No data found.</div> -->
                   <tr class="table-body-contents" v-if="!teamDetail">
                     <td class="text-center font-size-md font-weight-bold text-muted" colspan="3">
-                      <b-spinner class="justify-content-md-center text-blue" v-if="!dataFound"></b-spinner>
-                      <div
+                      <b-spinner
                         class="justify-content-md-center text-blue"
-                        v-else-if="dataFound"
-                      >No data found</div>
+                        v-if="!dataFound"
+                      ></b-spinner>
+                      <div class="justify-content-md-center text-blue" v-else-if="dataFound">
+                        No data found
+                      </div>
                     </td>
                   </tr>
 
                   <tr class="table-body-contents">
-                    <td>{{ teamDetail.name || '-'}}</td>
-                    <td>{{ teamDetail.village || '-'}}</td>
+                    <td>{{ teamDetail.name || "-" }}</td>
+                    <td>{{ teamDetail.village || "-" }}</td>
                     <td v-if="teamDetail.logo">
                       <img
-                        :src="teamDetail.logo|serverimage"
-                        width="150"
+                        :src="teamDetail.logo | serverimage"
+                        width="100"
                         height="auto"
                         :alt="teamDetail.name"
                       />
@@ -51,8 +55,8 @@
                   <viewImage
                     class="text-center"
                     v-bind:data="{
-                          id:id
-                        }"
+                      id: id
+                    }"
                   ></viewImage>
                 </tbody>
               </table>
@@ -62,24 +66,6 @@
             <div class="p-0 rounded-0">
               <div class="card-header">
                 <!-- search  -->
-
-                <div class="search float-right mt-minus7">
-                  <div class="row no-gutters align-items-center">
-                    <!-- <div class="ml-5 hide">
-                      <input
-                        class="form-control border-0 rounded-0 text-blue"
-                        type="text"
-                        v-model="searchText"
-                        @input="viewPlayer(1)"
-                        placeholder="Search"
-                      />
-                    </div>-->
-                    <div class="ml-5">
-                      <button class="ml-auto text-dark btn btn-warning font-weight-bold">Excel</button>
-                      <!-- v-on:click="generateExcel()" -->
-                    </div>
-                  </div>
-                </div>
                 <h5 class="card-title m-0">Players</h5>
               </div>
               <table class="mb-0 table table-hover table-striped">
@@ -89,18 +75,22 @@
                       class="text-uppercase text-blue"
                       v-for="tableHeader in tableHeaders"
                       v-bind:key="tableHeader.tableHeaderName"
-                    >{{ tableHeader.tableHeaderName }}</th>
+                    >
+                      {{ tableHeader.tableHeaderName }}
+                    </th>
                   </tr>
                 </thead>
                 <tbody class="p-0">
                   <!-- <div class="text-center font-size-lg" v-if="!allUser.length">No data found.</div> -->
                   <tr class="table-body-contents" v-if="!allPlayer.length">
                     <td class="text-center font-size-md font-weight-bold text-muted" colspan="10">
-                      <b-spinner class="justify-content-md-center text-blue" v-if="!dataFound"></b-spinner>
-                      <div
+                      <b-spinner
                         class="justify-content-md-center text-blue"
-                        v-else-if="dataFound"
-                      >No data found</div>
+                        v-if="!dataFound"
+                      ></b-spinner>
+                      <div class="justify-content-md-center text-blue" v-else-if="dataFound">
+                        No data found
+                      </div>
                     </td>
                   </tr>
 
@@ -110,29 +100,32 @@
                     v-bind:key="player.key"
                     :class="player.bodyColor"
                   >
-                    <td>{{index + 1 + (currentPage - 1) * allPlayer.length}}</td>
-                    <td>{{ player.fullName || '-'}}</td>
-                    <td>{{ player.mobile || '-'}}</td>
-                    <td>{{ player.email || '-'}}</td>
-                    <td>{{ player.age || '-'}}</td>
-                    <td>{{ player.keyRole || '-'}}</td>
-                    <td>{{ player.battingType || '-'}}</td>
-                    <td>{{ player.bowlingType || '-'}}</td>
-                    <td>{{ player.isWicketKeeper || '-'}}</td>
+                    <td>{{ index + 1 + (currentPage - 1) * allPlayer.length }}</td>
+                    <td>{{ player.fullName || "-" }}</td>
+                    <td>{{ player.mobile || "-" }}</td>
+                    <td>{{ player.email || "-" }}</td>
+                    <td>{{ player.age || "-" }}</td>
+                    <td>{{ player.keyRole || "-" }}</td>
+                    <td>{{ player.battingType || "-" }}</td>
+                    <td>{{ player.bowlingType || "-" }}</td>
+                    <td v-if="player.isWicketkeeper">Yes</td>
+                    <td v-if="!player.isWicketkeeper">No</td>
                     <td v-if="player.photograph">
                       <button
                         class="text-primary btn px-1 py-0"
                         v-b-modal.modal-1
                         @click="passData(player.photograph)"
-                      >View</button>
+                      >
+                        View
+                      </button>
                     </td>
                     <td v-if="!player.photograph">-</td>
                   </tr>
                   <viewImage
                     class="text-center"
                     v-bind:data="{
-                          id:id
-                        }"
+                      id: id
+                    }"
                   ></viewImage>
                 </tbody>
               </table>
@@ -163,6 +156,7 @@ export default {
       id: "",
       page: "",
       currentPage: 1,
+      dataFound: false,
       allPlayer: [],
       PlayerArray: [],
       teamDetail: {},
@@ -244,7 +238,6 @@ export default {
   methods: {
     getOne() {
       if (this.$route.params.id) {
-        console.log("this.$route.params._id", this.$route.params.id);
         service.getOneTeam(this.$route.params.id, data => {
           this.teamDetail = data.data;
         });
@@ -269,12 +262,6 @@ export default {
         } else {
           this.dataFound = true;
         }
-      });
-    },
-    generateExcel() {
-      console.log("in function");
-      service.generateExcel({}, "Player", (err, result) => {
-        console.log("result---*******", err, result);
       });
     }
   }
