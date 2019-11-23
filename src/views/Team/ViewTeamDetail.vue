@@ -189,11 +189,11 @@ export default {
           key: "key1"
         },
         {
-          tableHeaderName: "Email",
+          tableHeaderName: "Contact No",
           key: "key1"
         },
         {
-          tableHeaderName: "Contact No",
+          tableHeaderName: "Email",
           key: "key1"
         },
         {
