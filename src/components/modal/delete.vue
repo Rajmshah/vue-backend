@@ -1,14 +1,14 @@
 <template>
   <div>
     <b-modal
-      id="modal-1"
+      :id="'delete'+data.id"
       ref="deleteButton"
       title="Are sure you want to delete?"
       hide-footer
       no-stacking
     >
       <b-button @click="close()" variant="outline-danger" class="mr-3">Delete</b-button>
-      <b-button variant="outline-primary" @click="$bvModal.hide('modal-1')">Cancel</b-button>
+      <b-button variant="outline-primary" @click="$bvModal.hide('delete'+data.id)">Cancel</b-button>
     </b-modal>
   </div>
 </template>
@@ -35,7 +35,7 @@ export default {
       this.modal = this.id;
       const obj = {};
       obj._id = this.data.id;
-      this.$bvModal.hide("modal-1");
+      this.$bvModal.hide("delete" + this.data.id);
       this.$emit("event_child", obj);
     },
     deleteTostr() {

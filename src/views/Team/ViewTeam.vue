@@ -31,9 +31,7 @@
                       <button
                         class="ml-auto text-dark btn btn-warning font-weight-bold"
                         v-on:click="generateExcel()"
-                      >
-                        Excel
-                      </button>
+                      >Excel</button>
                     </div>
                   </div>
                 </div>
@@ -46,22 +44,18 @@
                       class="text-uppercase text-blue"
                       v-for="tableHeader in tableHeaders"
                       v-bind:key="tableHeader.tableHeaderName"
-                    >
-                      {{ tableHeader.tableHeaderName }}
-                    </th>
+                    >{{ tableHeader.tableHeaderName }}</th>
                   </tr>
                 </thead>
                 <tbody class="p-0">
                   <!-- <div class="text-center font-size-lg" v-if="!allUser.length">No data found.</div> -->
                   <tr class="table-body-contents" v-if="!allteam.length">
                     <td class="text-center font-size-md font-weight-bold text-muted" colspan="7">
-                      <b-spinner
+                      <b-spinner class="justify-content-md-center text-blue" v-if="!dataFound"></b-spinner>
+                      <div
                         class="justify-content-md-center text-blue"
-                        v-if="!dataFound"
-                      ></b-spinner>
-                      <div class="justify-content-md-center text-blue" v-else-if="dataFound">
-                        No data found
-                      </div>
+                        v-else-if="dataFound"
+                      >No data found</div>
                     </td>
                   </tr>
 
@@ -85,23 +79,16 @@
                       >
                         <font-awesome-icon :icon="['far', 'eye']" />
                       </router-link>
-                      <button
-                        class="text-danger btn px-1 py-0"
-                        v-b-modal.modal-1
-                        @click="deleteData(team._id)"
-                      >
+                      <button class="text-danger btn px-1 py-0" v-b-modal="'delete' + team._id">
                         <font-awesome-icon :icon="['far', 'trash-alt']" />
                       </button>
+                      <Delete
+                        class="text-center"
+                        :data="{ id: team._id }"
+                        v-on:event_child="deleteAndRefresh"
+                      ></Delete>
                     </td>
                   </tr>
-
-                  <Delete
-                    class="text-center"
-                    v-bind:data="{
-                      id: id
-                    }"
-                    v-on:event_child="deleteAndRefresh"
-                  ></Delete>
                 </tbody>
               </table>
             </div>

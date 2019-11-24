@@ -31,16 +31,13 @@
                       <router-link
                         class="ml-auto text-dark font-weight-bold btn btn-warning"
                         to="/create-user"
-                        >Create User</router-link
-                      >
+                      >Create User</router-link>
                     </div>
                     <div class="ml-3">
                       <button
                         v-on:click="generateExcel()"
                         class="ml-auto text-dark btn btn-warning font-weight-bold"
-                      >
-                        Excel
-                      </button>
+                      >Excel</button>
                     </div>
                   </div>
                 </div>
@@ -53,21 +50,17 @@
                       class="text-uppercase text-blue"
                       v-for="tableHeader in tableHeaders"
                       v-bind:key="tableHeader.tableHeaderName"
-                    >
-                      {{ tableHeader.tableHeaderName }}
-                    </th>
+                    >{{ tableHeader.tableHeaderName }}</th>
                   </tr>
                 </thead>
                 <tbody class="p-0">
                   <tr class="table-body-contents" v-if="!allUser.length">
                     <td class="text-center font-size-md font-weight-bold text-muted" colspan="7">
-                      <b-spinner
+                      <b-spinner class="justify-content-md-center text-blue" v-if="!dataFound"></b-spinner>
+                      <div
                         class="justify-content-md-center text-blue"
-                        v-if="!dataFound"
-                      ></b-spinner>
-                      <div class="justify-content-md-center text-blue" v-else-if="dataFound">
-                        No data found
-                      </div>
+                        v-else-if="dataFound"
+                      >No data found</div>
                     </td>
                   </tr>
 
@@ -92,22 +85,18 @@
                         <font-awesome-icon :icon="['fas', 'edit']" />
                       </router-link>
 
-                      <button
-                        class="text-danger btn px-1 py-0"
-                        v-b-modal.modal-1
-                        @click="deleteData(User._id)"
-                      >
+                      <button class="text-danger btn px-1 py-0" v-b-modal="'delete' + User._id">
                         <font-awesome-icon :icon="['far', 'trash-alt']" />
                       </button>
+                      <Delete
+                        class="text-center"
+                        :data="{ id: User._id }"
+                        v-on:event_child="deleteAndRefresh"
+                      ></Delete>
 
                       <!-- <div class="modal"></div> -->
                     </td>
                   </tr>
-                  <Delete
-                    class="text-center"
-                    v-bind:data="{ id: id }"
-                    v-on:event_child="deleteAndRefresh"
-                  ></Delete>
                 </tbody>
               </table>
             </div>

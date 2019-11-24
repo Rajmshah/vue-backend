@@ -31,8 +31,7 @@
                       <router-link
                         class="ml-auto text-dark font-weight-bold btn btn-warning"
                         to="/create-setting"
-                        >Create Setting</router-link
-                      >
+                      >Create Setting</router-link>
                     </div>
                   </div>
                 </div>
@@ -45,21 +44,17 @@
                       class="text-uppercase text-blue"
                       v-for="tableHeader in tableHeaders"
                       v-bind:key="tableHeader.tableHeaderName"
-                    >
-                      {{ tableHeader.tableHeaderName }}
-                    </th>
+                    >{{ tableHeader.tableHeaderName }}</th>
                   </tr>
                 </thead>
                 <tbody class="p-0">
                   <tr class="table-body-contents" v-if="!allSetting.length">
                     <td class="text-center font-size-md font-weight-bold text-muted" colspan="7">
-                      <b-spinner
+                      <b-spinner class="justify-content-md-center text-blue" v-if="!dataFound"></b-spinner>
+                      <div
                         class="justify-content-md-center text-blue"
-                        v-if="!dataFound"
-                      ></b-spinner>
-                      <div class="justify-content-md-center text-blue" v-else-if="dataFound">
-                        No data found
-                      </div>
+                        v-else-if="dataFound"
+                      >No data found</div>
                     </td>
                   </tr>
 
@@ -82,22 +77,16 @@
                         <font-awesome-icon :icon="['fas', 'edit']" />
                       </router-link>
 
-                      <button
-                        class="text-danger btn px-1 py-0"
-                        v-b-modal.modal-1
-                        @click="deleteData(Setting._id)"
-                      >
+                      <button class="text-danger btn px-1 py-0" v-b-modal="'delete' + Setting._id">
                         <font-awesome-icon :icon="['far', 'trash-alt']" />
                       </button>
-
-                      <!-- <div class="modal"></div> -->
+                      <Delete
+                        class="text-center"
+                        :data="{ id: Setting._id }"
+                        v-on:event_child="deleteAndRefresh"
+                      ></Delete>
                     </td>
                   </tr>
-                  <Delete
-                    class="text-center"
-                    v-bind:data="{ id: id }"
-                    v-on:event_child="deleteAndRefresh"
-                  ></Delete>
                 </tbody>
               </table>
             </div>
@@ -163,7 +152,9 @@ export default {
   methods: {
     deleteAndRefresh(obj) {
       service.deleteSetting(obj._id, data => {
-        this.viewSetting(this.currentPage);
+        // this.allSetting = [];
+        this.$router.go(0);
+        // this.viewSetting(this.currentPage);
       });
     },
     viewSetting(page) {
