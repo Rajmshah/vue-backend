@@ -214,7 +214,7 @@ export default {
     },
     goToPage(page) {
       this.$router.push({
-        name: "View User"
+        name: "ViewUser"
       });
       this.viewUser(page);
     },
