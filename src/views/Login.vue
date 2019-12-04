@@ -74,7 +74,7 @@ export default {
       Logo: headerLogo,
       textHeader: "Welcome!",
       textEmail: "Email",
-      textPassword: "Password ",
+      textPassword: "Password",
       createAccount: "Create account"
     };
   },
@@ -100,19 +100,22 @@ export default {
       if (this.$v.formData.$error) {
         return;
       } else {
-        service.userlogin(obj, data => {
-          if (data.data) {
-            global.setUser(data.data);
-            this.$toaster.success("Login Successfully.", {
-              timeout: 2000
-            });
-            this.$router.push("/view-brand");
-          } else {
-            this.$toaster.error("Please Enter Valid Data.", {
-              timeout: 2000
-            });
-          }
-        });
+        if (
+          obj.email == "mtcmarudharcup@gmail.com" &&
+          obj.password == "mtc2019marudharcup"
+        ) {
+          global.setUser({
+            isLoggedIn: true
+          });
+          this.$toaster.success("Login Successfully.", {
+            timeout: 2000
+          });
+          this.$router.push("/view-user");
+        } else {
+          this.$toaster.error("Please Enter Valid Data.", {
+            timeout: 2000
+          });
+        }
       }
     }
   }
