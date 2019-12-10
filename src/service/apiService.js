@@ -1,13 +1,13 @@
 import axios from 'axios';
 import moment from 'moment/moment';
-
+import globalJs from '@/service/global';
 // Local
 
-// const adminUrl = "http://localhost:3000/";
+const adminUrl = 'http://localhost:3000/';
 
 // Server
 
-const adminUrl = 'http://api.mtcmarudharcup.com/';
+// const adminUrl = "http://api.mtcmarudharcup.com/";
 
 export default {
   // userlogin: (data, callback) => axios
@@ -235,6 +235,175 @@ export default {
 
   // Setting APIS CALLING END
 
+  // About APIS CALLING
+
+  // get All About
+  searchAbout: (data, callback) => axios
+      .get(`${adminUrl}About/`, { params: data })
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // update About
+  updateAbout: (id, data, callback) => axios
+      .put(`${adminUrl}About/updateAbout/${id}`, data)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // save About
+  saveAbout: (data, callback) => axios
+      .post(`${adminUrl}About/saveAbout`, data)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // delete About
+  deleteAbout: (id, callback) => axios
+      .delete(`${adminUrl}About/deleteAbout/${id}`)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // get one About
+  getOneAbout: (id, callback) => axios
+      .get(`${adminUrl}About/getOne/${id}`)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // About APIS CALLING END
+  // Contact APIS CALLING
+
+  // get All Contact
+  searchContact: (data, callback) => axios
+      .get(`${adminUrl}Contact/`, { params: data })
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // update Contact
+  updateContact: (id, data, callback) => axios
+      .put(`${adminUrl}Contact/updateContact/${id}`, data)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // save Contact
+  saveContact: (data, callback) => axios
+      .post(`${adminUrl}Contact/saveContact`, data)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // delete Contact
+  deleteContact: (id, callback) => axios
+      .delete(`${adminUrl}Contact/deleteContact/${id}`)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // get one Contact
+  getOneContact: (id, callback) => axios
+      .get(`${adminUrl}Contact/getOne/${id}`)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  getOneSpecialContact: (id, callback) => axios
+      .get(`${adminUrl}Contact/getOneSpecialContact/${id}`)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // Contact APIS CALLING END
+
+  // SPONSOR APIS CALLING
+  // get All Sponsor
+  searchSponsor: (data, callback) => axios
+      .get(`${adminUrl}Sponsor/`, { params: data })
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // update Sponsor
+  updateSponsor: (id, data, callback) => axios
+      .put(`${adminUrl}Sponsor/updateSponsor/${id}`, data)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // save Sponsor
+  saveSponsor: (data, callback) => axios
+      .post(`${adminUrl}Sponsor/saveSponsor`, data)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // delete Sponsor
+  deleteSponsor: (id, callback) => axios
+      .delete(`${adminUrl}Sponsor/deleteSponsor/${id}`)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // get one Sponsor
+  getOneSponsor: (id, callback) => axios
+      .get(`${adminUrl}Sponsor/getOne/${id}`)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // Sponsor APIS CALLING END
+
   // export to excel
   generateUserExcel: (reportData, filename, callback) => axios({
       url: `${adminUrl}User/generateExcel`,
@@ -272,6 +441,14 @@ export default {
         document.body.appendChild(link);
         link.click();
         callback(null, fileName);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+  upload: (formData, callback) => axios
+      .post(globalJs.uploadUrl, formData)
+      .then((data) => {
+        callback(data);
       })
       .catch((err) => {
         callback(err);

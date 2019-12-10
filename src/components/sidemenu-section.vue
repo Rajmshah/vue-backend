@@ -31,6 +31,22 @@ export default {
           link: "/view-team"
         },
         {
+          name: "Home",
+          link: "/view-home"
+        },
+        {
+          name: "About",
+          link: "/view-about"
+        },
+        {
+          name: "Contact",
+          link: "/view-contact"
+        },
+        {
+          name: "Sponsors",
+          link: "/view-sponsor"
+        },
+        {
           name: "Setting",
           link: "/view-setting"
         }

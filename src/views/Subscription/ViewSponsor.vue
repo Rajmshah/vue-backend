@@ -23,25 +23,25 @@
                         class="form-control border-0 rounded-0 text-blue"
                         type="text"
                         v-model="searchText"
-                        @input="viewUser(1)"
+                        @input="viewSponsor(1)"
                         placeholder="Search"
                       />
                     </div>
                     <div class="ml-3">
                       <router-link
                         class="ml-auto text-dark font-weight-bold btn btn-warning"
-                        to="/create-user"
-                      >Create User</router-link>
+                        to="/create-sponsor"
+                      >Create Sponsor</router-link>
                     </div>
-                    <div class="ml-3">
+                    <!-- <div class="ml-3">
                       <button
                         v-on:click="generateExcel()"
                         class="ml-auto text-dark btn btn-warning font-weight-bold"
                       >Excel</button>
-                    </div>
+                    </div>-->
                   </div>
                 </div>
-                <h5 class="card-title m-0">User</h5>
+                <h5 class="card-title m-0">Sponsor</h5>
               </div>
               <table class="mb-0 table table-hover table-striped">
                 <thead>
@@ -54,7 +54,7 @@
                   </tr>
                 </thead>
                 <tbody class="p-0">
-                  <tr class="table-body-contents" v-if="!allUser.length">
+                  <tr class="table-body-contents" v-if="!allSponsor.length">
                     <td class="text-center font-size-md font-weight-bold text-muted" colspan="7">
                       <b-spinner class="justify-content-md-center text-blue" v-if="!dataFound"></b-spinner>
                       <div
@@ -66,31 +66,30 @@
 
                   <tr
                     class="table-body-contents"
-                    v-for="(User, index) in allUser"
-                    v-bind:key="User.key"
-                    :class="User.bodyColor"
+                    v-for="(Sponsor, index) in allSponsor"
+                    v-bind:key="Sponsor.key"
+                    :class="Sponsor.bodyColor"
                   >
                     <td>{{ index + 1 + (currentPage - 1) * 10 }}</td>
-                    <td>{{ User.username || "-" }}</td>
-                    <td>{{ User.password || "-" }}</td>
-                    <td>{{ User.email || "-" }}</td>
+                    <td>{{ Sponsor.name || "-" }}</td>
+                    <td>{{ Sponsor.typeSponsor || "-" }}</td>
                     <td class="pl-4">
                       <router-link
                         class="text-warning btn px-1 py-0"
                         v-b-tooltip.hover
                         title="Edit"
-                        :to="{ name: 'EditUser', params: { id: User._id } }"
+                        :to="{ name: 'EditSponsor', params: { id: Sponsor._id } }"
                         append
                       >
                         <font-awesome-icon :icon="['fas', 'edit']" />
                       </router-link>
 
-                      <button class="text-danger btn px-1 py-0" v-b-modal="'delete' + User._id">
+                      <button class="text-danger btn px-1 py-0" v-b-modal="'delete' + Sponsor._id">
                         <font-awesome-icon :icon="['far', 'trash-alt']" />
                       </button>
                       <Delete
                         class="text-center"
-                        :data="{ id: User._id }"
+                        :data="{ id: Sponsor._id }"
                         v-on:event_child="deleteAndRefresh"
                       ></Delete>
 
@@ -134,7 +133,7 @@ export default {
   },
   data() {
     return {
-      type: "User",
+      type: "Sponsor",
       id: "",
       page: "",
       searchText: "",
@@ -142,11 +141,11 @@ export default {
       totalCount: 0,
       perPage: 0,
       dataFound: false,
-      allUser: [],
-      userArray: [],
+      allSponsor: [],
+      SponsorArray: [],
       breadCrum: [
         {
-          text: "User"
+          text: "Sponsor"
         }
       ],
       tableHeaders: [
@@ -155,15 +154,11 @@ export default {
           key: "key1"
         },
         {
-          tableHeaderName: "username",
+          tableHeaderName: "Sponsor Name",
           key: "key1"
         },
         {
-          tableHeaderName: "password",
-          key: "key1"
-        },
-        {
-          tableHeaderName: "email",
+          tableHeaderName: "Sponsor Section",
           key: "key1"
         },
         {
@@ -177,23 +172,23 @@ export default {
     };
   },
   created() {
-    this.viewUser(this.currentPage);
+    this.viewSponsor(this.currentPage);
   },
 
   methods: {
     deleteAndRefresh(obj) {
-      service.deleteUser(obj._id, data => {
-        this.viewUser(this.currentPage);
+      service.deleteSponsor(obj._id, data => {
+        this.viewSponsor(this.currentPage);
       });
     },
-    viewUser(page) {
+    viewSponsor(page) {
       this.currentPage = page;
       const formData = {};
       formData.page = page;
       formData.name = this.searchText;
-      service.searchUser(formData, data => {
+      service.searchSponsor(formData, data => {
         if (data.status === 200) {
-          this.allUser = data.data.result;
+          this.allSponsor = data.data.result;
           this.totalCount = data.data.count;
           this.perPage = 10;
         } else if (page > 1) {
@@ -214,12 +209,12 @@ export default {
     },
     goToPage(page) {
       this.$router.push({
-        name: "ViewUser"
+        name: "ViewSponsor"
       });
-      this.viewUser(page);
+      this.viewSponsor(page);
     },
     generateExcel() {
-      service.generateUserExcel({}, "User", (err, result) => {
+      service.generateSponsorExcel({}, "Sponsor", (err, result) => {
         if (err) {
           this.$toaster.error("Error while generating Excel.", {
             timeout: 2000
