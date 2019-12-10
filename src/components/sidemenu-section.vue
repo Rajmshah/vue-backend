@@ -43,6 +43,14 @@ export default {
           link: "/view-contact"
         },
         {
+          name: "Enquiry",
+          link: "/view-enquiry"
+        },
+        {
+          name: "Subscription",
+          link: "/view-subscription"
+        },
+        {
           name: "Sponsors",
           link: "/view-sponsor"
         },

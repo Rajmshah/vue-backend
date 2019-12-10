@@ -23,16 +23,16 @@
                         class="form-control border-0 rounded-0 text-blue"
                         type="text"
                         v-model="searchText"
-                        @input="viewSponsor(1)"
+                        @input="viewEnquiry(1)"
                         placeholder="Search"
                       />
                     </div>
-                    <div class="ml-3">
+                    <!-- <div class="ml-3">
                       <router-link
                         class="ml-auto text-dark font-weight-bold btn btn-warning"
-                        to="/create-sponsor"
-                      >Create Sponsor</router-link>
-                    </div>
+                        to="/create-enquiry"
+                      >Create Enquiry</router-link>
+                    </div>-->
                     <!-- <div class="ml-3">
                       <button
                         v-on:click="generateExcel()"
@@ -41,7 +41,7 @@
                     </div>-->
                   </div>
                 </div>
-                <h5 class="card-title m-0">Sponsor</h5>
+                <h5 class="card-title m-0">Enquiry</h5>
               </div>
               <table class="mb-0 table table-hover table-striped">
                 <thead>
@@ -54,7 +54,7 @@
                   </tr>
                 </thead>
                 <tbody class="p-0">
-                  <tr class="table-body-contents" v-if="!allSponsor.length">
+                  <tr class="table-body-contents" v-if="!allEnquiry.length">
                     <td class="text-center font-size-md font-weight-bold text-muted" colspan="7">
                       <b-spinner class="justify-content-md-center text-blue" v-if="!dataFound"></b-spinner>
                       <div
@@ -66,30 +66,34 @@
 
                   <tr
                     class="table-body-contents"
-                    v-for="(Sponsor, index) in allSponsor"
-                    v-bind:key="Sponsor.key"
-                    :class="Sponsor.bodyColor"
+                    v-for="(Enquiry, index) in allEnquiry"
+                    v-bind:key="Enquiry.key"
+                    :class="Enquiry.bodyColor"
                   >
                     <td>{{ index + 1 + (currentPage - 1) * 10 }}</td>
-                    <td>{{ Sponsor.name || "-" }}</td>
-                    <td>{{ Sponsor.typeSponsor || "-" }}</td>
+                    <td>{{ Enquiry.name || "-" }}</td>
+                    <td>{{ Enquiry.email || "-" }}</td>
+                    <td>{{ Enquiry.mobile || "-" }}</td>
+                    <td>
+                      <div>{{ Enquiry.query || "-" }}</div>
+                    </td>
                     <td class="pl-4">
-                      <router-link
+                      <!-- <router-link
                         class="text-warning btn px-1 py-0"
                         v-b-tooltip.hover
                         title="Edit"
-                        :to="{ name: 'EditSponsor', params: { id: Sponsor._id } }"
+                        :to="{ name: 'EditEnquiry', params: { id: Enquiry._id } }"
                         append
                       >
                         <font-awesome-icon :icon="['fas', 'edit']" />
-                      </router-link>
+                      </router-link>-->
 
-                      <button class="text-danger btn px-1 py-0" v-b-modal="'delete' + Sponsor._id">
+                      <button class="text-danger btn px-1 py-0" v-b-modal="'delete' + Enquiry._id">
                         <font-awesome-icon :icon="['far', 'trash-alt']" />
                       </button>
                       <Delete
                         class="text-center"
-                        :data="{ id: Sponsor._id }"
+                        :data="{ id: Enquiry._id }"
                         v-on:event_child="deleteAndRefresh"
                       ></Delete>
 
@@ -122,7 +126,6 @@ import HeaderSection from "@/components/header-section.vue";
 import Sidemenu from "@/components/sidemenu-section.vue";
 import service from "@/service/apiService";
 import Delete from "@/components/modal/delete.vue";
-import { constants } from "crypto";
 
 export default {
   name: "Table",
@@ -133,7 +136,7 @@ export default {
   },
   data() {
     return {
-      type: "Sponsor",
+      type: "Enquiry",
       id: "",
       page: "",
       searchText: "",
@@ -141,11 +144,11 @@ export default {
       totalCount: 0,
       perPage: 0,
       dataFound: false,
-      allSponsor: [],
-      SponsorArray: [],
+      allEnquiry: [],
+      EnquiryArray: [],
       breadCrum: [
         {
-          text: "Sponsor"
+          text: "Enquiry"
         }
       ],
       tableHeaders: [
@@ -154,16 +157,24 @@ export default {
           key: "key1"
         },
         {
-          tableHeaderName: "Sponsor Name",
-          key: "key1"
+          tableHeaderName: "Name",
+          key: "key2"
         },
         {
-          tableHeaderName: "Sponsor Section",
-          key: "key1"
+          tableHeaderName: "Email",
+          key: "key3"
+        },
+        {
+          tableHeaderName: "Mobile",
+          key: "key4"
+        },
+        {
+          tableHeaderName: "Query",
+          key: "key5"
         },
         {
           tableHeaderName: "Action",
-          key: "key1"
+          key: "key6"
         }
       ],
       approvedClass: "text-success",
@@ -172,23 +183,23 @@ export default {
     };
   },
   created() {
-    this.viewSponsor(this.currentPage);
+    this.viewEnquiry(this.currentPage);
   },
 
   methods: {
     deleteAndRefresh(obj) {
-      service.deleteSponsor(obj._id, data => {
-        this.viewSponsor(this.currentPage);
+      service.deleteEnquiry(obj._id, data => {
+        this.viewEnquiry(this.currentPage);
       });
     },
-    viewSponsor(page) {
+    viewEnquiry(page) {
       this.currentPage = page;
       const formData = {};
       formData.page = page;
       formData.name = this.searchText;
-      service.searchSponsor(formData, data => {
+      service.searchEnquiry(formData, data => {
         if (data.status === 200) {
-          this.allSponsor = data.data.result;
+          this.allEnquiry = data.data.result;
           this.totalCount = data.data.count;
           this.perPage = 10;
         } else if (page > 1) {
@@ -209,12 +220,12 @@ export default {
     },
     goToPage(page) {
       this.$router.push({
-        name: "ViewSponsor"
+        name: "ViewEnquiry"
       });
-      this.viewSponsor(page);
+      this.viewEnquiry(page);
     },
     generateExcel() {
-      service.generateSponsorExcel({}, "Sponsor", (err, result) => {
+      service.generateEnquiryExcel({}, "Enquiry", (err, result) => {
         if (err) {
           this.$toaster.error("Error while generating Excel.", {
             timeout: 2000

@@ -13,27 +13,38 @@ import ViewTeamDetail from './views/Team/ViewTeamDetail.vue';
 // user
 import ViewUser from './views/User/ViewUser.vue';
 import CreateUser from './views/User/CreateUser.vue';
-import EditUser from './views/User/EditUser';
+import EditUser from './views/User/EditUser.vue';
 
 // Setting
 import ViewSetting from './views/Setting/ViewSetting.vue';
 import CreateSetting from './views/Setting/CreateSetting.vue';
-import EditSetting from './views/Setting/EditSetting';
+import EditSetting from './views/Setting/EditSetting.vue';
+
+// Home
+import ViewHome from './views/Home/ViewHome.vue';
+import CreateHome from './views/Home/CreateHome.vue';
+import EditHome from './views/Home/EditHome.vue';
 
 // About
 import ViewAbout from './views/About/ViewAbout.vue';
 import CreateAbout from './views/About/CreateAbout.vue';
-import EditAbout from './views/About/EditAbout';
+import EditAbout from './views/About/EditAbout.vue';
 
 // Contact
 import ViewContact from './views/Contact/ViewContact.vue';
 import CreateContact from './views/Contact/CreateContact.vue';
-import EditContact from './views/Contact/EditContact';
+import EditContact from './views/Contact/EditContact.vue';
 
 // Sponsor
 import ViewSponsor from './views/Sponsor/ViewSponsor.vue';
 import CreateSponsor from './views/Sponsor/CreateSponsor.vue';
-import EditSponsor from './views/Sponsor/EditSponsor';
+import EditSponsor from './views/Sponsor/EditSponsor.vue';
+
+// Subscription
+import ViewSubscription from './views/Subscription/ViewSubscription.vue';
+
+// Enquiry
+import ViewEnquiry from './views/Enquiry/ViewEnquiry.vue';
 
 import global from '@/service/global.js';
 
@@ -110,6 +121,24 @@ export default new Router({
       component: EditSetting,
     },
     {
+      path: '/create-home',
+      name: 'CreateHome',
+      beforeEnter: guard,
+      component: CreateHome,
+    },
+    {
+      path: '/view-home',
+      name: 'ViewHome',
+      beforeEnter: guard,
+      component: ViewHome,
+    },
+    {
+      path: '/edit-home/:id',
+      name: 'EditHome',
+      beforeEnter: guard,
+      component: EditHome,
+    },
+    {
       path: '/create-about',
       name: 'CreateAbout',
       beforeEnter: guard,
@@ -162,6 +191,18 @@ export default new Router({
       name: 'EditSponsor',
       beforeEnter: guard,
       component: EditSponsor,
+    },
+    {
+      path: '/view-subscription',
+      name: 'ViewSubscription',
+      beforeEnter: guard,
+      component: ViewSubscription,
+    },
+    {
+      path: '/view-enquiry',
+      name: 'ViewEnquiry',
+      beforeEnter: guard,
+      component: ViewEnquiry,
     },
   ],
 });

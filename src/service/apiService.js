@@ -288,6 +288,59 @@ export default {
       }),
 
   // About APIS CALLING END
+  // Homepage APIS CALLING
+
+  // get All Homepage
+  searchHomepage: (data, callback) => axios
+      .get(`${adminUrl}Homepage/`, { params: data })
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // update Homepage
+  updateHomepage: (id, data, callback) => axios
+      .put(`${adminUrl}Homepage/updateHomepage/${id}`, data)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // save Homepage
+  saveHomepage: (data, callback) => axios
+      .post(`${adminUrl}Homepage/saveHomepage`, data)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // delete Homepage
+  deleteHomepage: (id, callback) => axios
+      .delete(`${adminUrl}Homepage/deleteHomepage/${id}`)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // get one Homepage
+  getOneHomepage: (id, callback) => axios
+      .get(`${adminUrl}Homepage/getOne/${id}`)
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // Homepage APIS CALLING END
   // Contact APIS CALLING
 
   // get All Contact
@@ -403,6 +456,32 @@ export default {
       }),
 
   // Sponsor APIS CALLING END
+
+  // Subscription APIS CALLING
+
+  // get All Subscription
+  searchSubscription: (data, callback) => axios
+      .get(`${adminUrl}Subscription/`, { params: data })
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // Subscription APIS CALLING END
+
+  // get All EnquiryForm
+  searchEnquiry: (data, callback) => axios
+      .get(`${adminUrl}EnquiryForm/`, { params: data })
+      .then((responseData) => {
+        callback(responseData);
+      })
+      .catch((err) => {
+        callback(err);
+      }),
+
+  // EnquiryForm APIS CALLING END
 
   // export to excel
   generateUserExcel: (reportData, filename, callback) => axios({
