@@ -3,11 +3,11 @@ import moment from 'moment/moment';
 import globalJs from '@/service/global';
 // Local
 
-const adminUrl = 'http://localhost:3000/';
+// const adminUrl = 'http://localhost:3000/';
 
 // Server
 
-// const adminUrl = "http://api.mtcmarudharcup.com/";
+const adminUrl = 'http://api.mtcmarudharcup.com/';
 
 export default {
   // userlogin: (data, callback) => axios
