@@ -19,7 +19,7 @@
                 <h5 class="card-title m-0">Edit Home</h5>
               </div>
               <div class="p-3">
-                <b-form name="editHome" role="form" v-if="show">
+                <b-form name="editHome" v-if="show">
                   <b-form-group>
                     <label
                       id="exampleInputGroup1"
@@ -48,7 +48,7 @@
                     ></b-form-textarea>
                   </b-form-group>
 
-                  <b-form-group>
+                  <b-form-group class="bg-box">
                     <label id="banner" label="Banner" label-for="banner">Banner:</label>
                     <div class="float-right mb-3">
                       <b-button variant="primary" @click="addBanner()">Add Banner</b-button>
@@ -96,15 +96,12 @@
                             <td>
                               <div class="text-center">
                                 <b-button
-                                  :id="'bannerImage'+index"
-                                  raised
-                                  @click="onClickBannerFile(index)"
+                                  v-on:click="onClickBannerFile(index)"
                                   variant="primary"
                                   type="button"
                                 >Upload</b-button>
                                 <input
                                   type="file"
-                                  :name="'bannerImage'+index"
                                   style="display:none"
                                   ref="fileInputBanner"
                                   accept="image/*"
@@ -145,10 +142,10 @@
                             </td>
                             <td>
                               <div class="text-center">
-                                <button
+                                <b-button
                                   class="btn btn-danger"
-                                  @click="deleteBannerAdded(index)"
-                                >Delete</button>
+                                  v-on:click="deleteBannerAdded(index)"
+                                >Delete</b-button>
                               </div>
                             </td>
                           </tr>
@@ -157,7 +154,7 @@
                     </div>
                   </b-form-group>
 
-                  <b-form-group>
+                  <b-form-group class="bg-box">
                     <label id="adBlock" label="Ad Block" label-for="adBlock">Ad Block:</label>
                     <div class="float-right mb-3">
                       <b-button variant="primary" @click="addAdBlock()">Add AdBlock</b-button>
@@ -205,15 +202,12 @@
                             <td>
                               <div class="text-center">
                                 <b-button
-                                  :id="'adsImage'+index"
-                                  raised
-                                  @click="onClickAdBlockFile(index)"
+                                  v-on:click="onClickAdBlockFile(index)"
                                   variant="primary"
                                   type="button"
                                 >Upload</b-button>
                                 <input
                                   type="file"
-                                  :name="'adsImage'+index"
                                   style="display:none"
                                   ref="fileInputAdBlock"
                                   accept="image/*"
@@ -254,10 +248,10 @@
                             </td>
                             <td>
                               <div class="text-center">
-                                <button
+                                <b-button
                                   class="btn btn-danger"
-                                  @click="deleteAdBlockAdded(index)"
-                                >Delete</button>
+                                  v-on:click="deleteAdBlockAdded(index)"
+                                >Delete</b-button>
                               </div>
                             </td>
                           </tr>
@@ -266,7 +260,7 @@
                     </div>
                   </b-form-group>
 
-                  <b-form-group>
+                  <b-form-group class="bg-box">
                     <label id="gallery" label="Gallery" label-for="Gallery">Gallery:</label>
                     <div class="float-right mb-3">
                       <b-button variant="primary" @click="addGallery()">Add Gallery</b-button>
@@ -298,15 +292,12 @@
                             <td>
                               <div class="text-center">
                                 <b-button
-                                  :id="'galleryImage'+index"
-                                  raised
-                                  @click="onClickGalleryFile(index)"
+                                  v-on:click="onClickGalleryFile(index)"
                                   variant="primary"
                                   type="button"
                                 >Upload</b-button>
                                 <input
                                   type="file"
-                                  :name="'galleryImage'+index"
                                   style="display:none"
                                   ref="fileInputGallery"
                                   accept="image/*"
@@ -338,10 +329,10 @@
                             </td>
                             <td>
                               <div class="text-center">
-                                <button
+                                <b-button
                                   class="btn btn-danger"
-                                  @click="deleteGalleryAdded(index)"
-                                >Delete</button>
+                                  v-on:click="deleteGalleryAdded(index)"
+                                >Delete</b-button>
                               </div>
                             </td>
                           </tr>
@@ -427,13 +418,13 @@ export default {
       //   this.showError = false;
       service.updateHomepage(this.$route.params.id, this.form, data => {
         if (data.data) {
-          this.$router.push("/view-home");
+          this.$router.push({ name: "ViewHome" });
         }
       });
       // }
     },
     onCancel() {
-      this.$router.push("/view-home");
+      this.$router.push({ name: "ViewHome" });
     },
     addBanner() {
       this.form.banner.push({
@@ -575,5 +566,9 @@ export default {
 }
 label {
   font-weight: bold;
+}
+.bg-box {
+  background: #f5f5f5;
+  padding: 10px;
 }
 </style>

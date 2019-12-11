@@ -48,7 +48,7 @@
                     ></b-form-textarea>
                   </b-form-group>
 
-                  <b-form-group>
+                  <b-form-group class="bg-box">
                     <label id="banner" label="Banner" label-for="banner">Banner:</label>
                     <div class="float-right mb-3">
                       <b-button variant="primary" @click="addBanner()">Add Banner</b-button>
@@ -145,10 +145,10 @@
                             </td>
                             <td>
                               <div class="text-center">
-                                <button
+                                <b-button
                                   class="btn btn-danger"
                                   @click="deleteBannerAdded(index)"
-                                >Delete</button>
+                                >Delete</b-button>
                               </div>
                             </td>
                           </tr>
@@ -157,7 +157,7 @@
                     </div>
                   </b-form-group>
 
-                  <b-form-group>
+                  <b-form-group class="bg-box">
                     <label id="adBlock" label="Ad Block" label-for="adBlock">Ad Block:</label>
                     <div class="float-right mb-3">
                       <b-button variant="primary" @click="addAdBlock()">Add AdBlock</b-button>
@@ -254,10 +254,10 @@
                             </td>
                             <td>
                               <div class="text-center">
-                                <button
+                                <b-button
                                   class="btn btn-danger"
                                   @click="deleteAdBlockAdded(index)"
-                                >Delete</button>
+                                >Delete</b-button>
                               </div>
                             </td>
                           </tr>
@@ -266,7 +266,7 @@
                     </div>
                   </b-form-group>
 
-                  <b-form-group>
+                  <b-form-group class="bg-box">
                     <label id="gallery" label="Gallery" label-for="Gallery">Gallery:</label>
                     <div class="float-right mb-3">
                       <b-button variant="primary" @click="addGallery()">Add Gallery</b-button>
@@ -338,10 +338,10 @@
                             </td>
                             <td>
                               <div class="text-center">
-                                <button
+                                <b-button
                                   class="btn btn-danger"
                                   @click="deleteGalleryAdded(index)"
-                                >Delete</button>
+                                >Delete</b-button>
                               </div>
                             </td>
                           </tr>
@@ -576,5 +576,9 @@ export default {
 }
 label {
   font-weight: bold;
+}
+.bg-box {
+  background: #f5f5f5;
+  padding: 10px;
 }
 </style>

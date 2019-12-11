@@ -145,7 +145,7 @@
                             </td>
                             <td>
                               <div class="text-center">
-                                <button class="btn btn-danger" @click="deleteAdded(index)">Delete</button>
+                                <b-button class="btn btn-danger" @click="deleteAdded(index)">Delete</b-button>
                               </div>
                             </td>
                           </tr>

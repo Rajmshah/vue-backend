@@ -145,11 +145,11 @@
                             </td>
                             <td>
                               <div class="text-center">
-                                <button
+                                <b-button
                                   type="button"
                                   class="btn btn-danger"
                                   v-on:click="deleteAdded(index)"
-                                >Delete</button>
+                                >Delete</b-button>
                               </div>
                             </td>
                           </tr>
