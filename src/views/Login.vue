@@ -6,7 +6,7 @@
           <div class="login-box card align-self-center">
             <b-form class="card-body">
               <div class="login-image login-box align-self-center mt-3">
-                <b-img v-bind:src="Logo" fluid />
+                <b-img :src="Logo" fluid />
               </div>
               <div class="text-center mt-4 mb-3 text-uppercase font-size-lg">Login</div>
               <b-form-group class="form-group floating-label-form-group controls">
