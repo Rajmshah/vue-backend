@@ -72,7 +72,7 @@
                     ></multiselect>
                   </b-form-group>
 
-                  <b-form-group>
+                  <!-- <b-form-group>
                     <label for="social">
                       Social:
                       <span class="error">*</span>
@@ -89,6 +89,69 @@
                       :taggable="true"
                       @tag="addSocial"
                     ></multiselect>
+                  </b-form-group>-->
+
+                  <b-form-group>
+                    <label for="mobile">
+                      Social:
+                      <span class="error">*</span>
+                    </label>
+                    <div class="float-right mb-3">
+                      <b-button variant="primary" @click="addSocial()">Add New</b-button>
+                    </div>
+                    <div class="form-group table-responsive table-font reduce-tablepadding">
+                      <table class="table table-striped">
+                        <thead>
+                          <th>
+                            <div>Sr.no</div>
+                          </th>
+                          <th>
+                            <div>Title</div>
+                          </th>
+                          <th>
+                            <div>Link</div>
+                          </th>
+                          <th>
+                            <div>Action</div>
+                          </th>
+                        </thead>
+                        <tbody class>
+                          <tr v-for="(socialList,index) in form.social" :key="socialList.index">
+                            <td>
+                              <div class="text-center">{{index + 1}}</div>
+                            </td>
+                            <td>
+                              <div class="text-center">
+                                <b-form-input
+                                  class="rounded-0"
+                                  type="text"
+                                  v-model="socialList.title"
+                                  placeholder="Enter Title"
+                                />
+                              </div>
+                            </td>
+                            <td>
+                              <div class="text-center">
+                                <b-form-input
+                                  class="rounded-0"
+                                  type="text"
+                                  v-model="socialList.link"
+                                  placeholder="Enter Link"
+                                />
+                              </div>
+                            </td>
+                            <td>
+                              <div class="text-center">
+                                <b-button
+                                  class="btn btn-danger"
+                                  @click="deleteSocialAdded(index)"
+                                >Delete</b-button>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </b-form-group>
 
                   <b-form-group id="exampleInputGroup1">
@@ -214,12 +277,6 @@ export default {
           code: "ab"
         }
       ],
-      socialOptions: [
-        {
-          name: "https://facebook.com",
-          code: "Fa"
-        }
-      ],
       show: true,
       showError: false
     };
@@ -240,12 +297,12 @@ export default {
         _.each(this.form.email, function(n) {
           email.push(n.name);
         });
-        var social = [];
-        _.each(this.form.social, function(m) {
-          social.push(m.name);
-        });
+        // var social = [];
+        // _.each(this.form.social, function(m) {
+        //   social.push(m.name);
+        // });
+        // this.form.social = social;
         this.form.email = email;
-        this.form.social = social;
         service.saveContact(this.form, data => {
           if (data.data) {
             this.$router.push("/view-contact");
@@ -280,13 +337,17 @@ export default {
       this.emailOptions.push(tag);
       this.form.email.push(tag);
     },
-    addSocial(newTag) {
-      const tag = {
-        name: newTag,
-        code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000)
-      };
-      this.socialOptions.push(tag);
-      this.form.social.push(tag);
+    addSocial() {
+      // const tag = {
+      //   name: newTag,
+      //   code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000)
+      // };
+      // this.socialOptions.push(tag);
+      // this.form.social.push(tag);
+      this.form.social.push({
+        title: "",
+        link: ""
+      });
     },
     add() {
       this.form.mobile.push({
@@ -296,6 +357,9 @@ export default {
     },
     deleteAdded(index) {
       this.form.mobile.splice(index, 1);
+    },
+    deleteSocialAdded(index) {
+      this.form.social.splice(index, 1);
     },
     onlyNumbers($event) {
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;

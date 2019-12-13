@@ -174,8 +174,20 @@ export default {
   },
   methods: {
     deleteAndRefresh(obj) {
-      service.deleteTeam(obj._id, data => {
-        this.viewteam(this.currentPage);
+      const formData = {};
+      formData.page = 1;
+      formData.team = obj._id;
+      service.searchPlayer(formData, data => {
+        if (data.status === 200) {
+          this.$toaster.error(
+            "Please delete players before deleting the team."
+          );
+          this.$bvModal.hide("delete" + obj._id);
+        } else {
+          service.deleteTeam(obj._id, data => {
+            this.viewteam(this.currentPage);
+          });
+        }
       });
     },
 

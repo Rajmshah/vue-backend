@@ -4,7 +4,8 @@
     <b-navbar toggleable="md" type="light" variant="faded" class="bg-blue border-bottom" sticky>
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
       <b-navbar-brand href="/view-brand" class="header-logo">
-        <b-img :src="Logo" fluid />
+        <!-- <b-img :src="Logo" fluid /> -->
+        <b-img src="@/assets/mtc-logo.png" alt="MTC Marudhar Cup" fluid />
         <span class="text-white">MARUDHAR CUP</span>
       </b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
